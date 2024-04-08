@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import { Comment } from '../../model/common/comment';
+import { createUniqueId } from 'src/utility';
 
 @Injectable()
 export class CommentsService {
@@ -33,8 +34,8 @@ export class CommentsService {
 
   async addComment(comment: Omit<Comment, 'id'>): Promise<Comment> {
     const comments = await this.getComments();
-    const newComment: Comment = { id: Date.now(), ...comment };
-    comments.push(newComment);
+    const newComment: Comment = { id: createUniqueId(), ...comment };
+    comments.unshift(newComment);
     await fs.writeFile(this.filePath, JSON.stringify(comments, null, 2));
     return newComment;
   }

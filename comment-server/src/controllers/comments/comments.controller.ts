@@ -41,6 +41,7 @@ export class CommentsController {
     comment.content = dto.content;
     comment.authorName = dto.authorName;
     comment.likes = 0;
+    
     return this.commentsService.addComment(comment);
   }
 
