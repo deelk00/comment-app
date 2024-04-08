@@ -13,6 +13,7 @@ export class CommentsService {
     'comments.json',
   );
   private readonly fileEncoding = 'utf8';
+  private callbacks: ((message: string, data: Comment) => void)[] = [];
 
   async getComments(): Promise<Comment[]> {
     try {
@@ -37,6 +38,7 @@ export class CommentsService {
     const newComment: Comment = { id: createUniqueId(), ...comment };
     comments.unshift(newComment);
     await fs.writeFile(this.filePath, JSON.stringify(comments, null, 2));
+    this.sendMessage('added', newComment); // Emit an update event
     return newComment;
   }
 
@@ -46,6 +48,7 @@ export class CommentsService {
     if (index === -1) return undefined;
     const [deletedComment] = comments.splice(index, 1);
     await fs.writeFile(this.filePath, JSON.stringify(comments, null, 2));
+    this.sendMessage('deleted', deletedComment); // Emit an update event
     return deletedComment;
   }
 
@@ -58,6 +61,21 @@ export class CommentsService {
     comments[index].likes++;
 
     await fs.writeFile(this.filePath, JSON.stringify(comments, null, 2));
+    this.sendMessage('liked', comments[index]); // Emit an update event
     return comments[index];
+  }
+
+  sendMessage = (message: string, data: Comment) => {
+    for (const callback of this.callbacks) {
+      callback(message, data);
+    }
+  };
+
+  subscribe = (callback: (message: string, data: Comment) => void) => {
+    this.callbacks.push(callback);
+  };
+
+  unsubscribe = (callback: (message: string, data: Comment) => void) => {
+    this.callbacks = this.callbacks.filter(x => x !== callback);
   }
 }

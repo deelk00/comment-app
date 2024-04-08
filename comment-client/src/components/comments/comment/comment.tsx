@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./comment.scss";
+import { useAuthorName } from "../../../hooks/use-author-name";
+import { useComments } from "../../../hooks/use-comments";
 
 export interface CommentProps {
     id: number;
@@ -10,6 +12,7 @@ export interface CommentProps {
 }
 
 export const CommentComponent: React.FC<CommentProps> = (props) => {
+    const {comments, setComments} = useComments();
 
     const handleDelete = () => {
         fetch(`http://localhost:5000/comments/${props.id}`, {
@@ -22,6 +25,19 @@ export const CommentComponent: React.FC<CommentProps> = (props) => {
             props.onDelete(props.id);
         });
     };
+
+    const handleLike = () => {
+        fetch(`http://localhost:5000/comments/${props.id}/like`, {
+            method: 'PATCH'
+        }).then(response => {
+            if (!response.ok) {
+                console.error('Error liking comment');
+                return;
+            }
+            comments.find(c => c.id === props.id)!.likes++;
+            setComments([...comments]);
+        });
+    }
 
     return (
         <div className='comment-reference keep'>
@@ -36,7 +52,7 @@ export const CommentComponent: React.FC<CommentProps> = (props) => {
                     {props.content}
                 </div>
                 <div className='comment-footer row'>
-                    <div className="row keep likes c-pointer">
+                    <div className="row keep likes c-pointer" onClick={handleLike}>
                         <FontAwesomeIcon className="thumbs-icon" icon={"thumbs-up"} size="sm"></FontAwesomeIcon>
                         <span className='keep number'>{props.likes}</span>
                     </div>
