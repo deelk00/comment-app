@@ -1,0 +1,40 @@
+$active-icon-color: #333;
+$could-activate-icon-color: #666;
+$inactive-icon-color: #999;
+
+.control {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex-direction: row;
+    &:hover > .icon {
+        color: $could-activate-icon-color;
+    }
+
+    .icon {
+        margin: auto 0px auto 6px;   
+        color: $inactive-icon-color;
+        flex-grow: 0;
+    }
+
+    input, textarea {
+        display: flex;
+        border: 0;
+        flex-grow: 1;
+        border-radius: 4px;
+        padding: 8px 8px 8px 8px;
+        min-width: 0;
+
+        &[type="number"] {
+            text-align: right;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: inherit;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    }
+    
+}
+

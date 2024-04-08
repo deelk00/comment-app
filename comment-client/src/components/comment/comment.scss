@@ -1,0 +1,82 @@
+@import "../../styles/variables.scss";
+
+$comment-width: 350px;
+$icon-width: 12px;
+$icon-padding: 8px;
+$comment-padding: 8px;
+$transition-time: 0.2s;
+
+.comment-reference {
+    position: relative;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+    width: $comment-width + $icon-width + $comment-padding * 2 + $icon-padding * 2;
+
+    &:hover {
+        > .delete-icon {
+            right: 0;
+        }
+        > .comment {
+            left: 0;
+        }
+    }
+
+    .comment-icon {
+        position: absolute;
+        bottom: $comment-padding;
+        right: $comment-padding;
+        color: #00000033;
+    }
+
+    .delete-icon {
+        z-index: 1;
+        transition: $transition-time right;
+        position: absolute;
+        bottom: $comment-padding;
+
+        top: $comment-padding;
+        right: ($icon-width + $icon-padding);
+
+        color: #00000033;
+        border-radius: 50%;
+        aspect-ratio: 1;
+        width: $icon-width;
+        background-color: #aaaaaa33;
+        border: 1px solid #00000011;
+        padding: 8px;
+    }
+
+    .comment {
+        flex-shrink: 0;
+        z-index: 2;
+        background-color: #fff;
+        position: relative;
+        border: 1px solid $shadow-color;
+        border-radius: 4px;
+        box-shadow: 4px 4px 8px #99999944;
+        width: $comment-width - $comment-padding * 2;
+        font-size: 18px;
+        padding: $comment-padding;
+
+        top: 0;
+        left: ($icon-width + ($comment-padding + $icon-padding) * 2) / 2;
+        transition: $transition-time left;
+
+        .comment-footer {
+            margin-top: -2px;
+            font-size: 14px;
+            color: #666;
+    
+            .likes {
+                margin-right: 8px;
+                .number {
+                    font-weight: 600;
+                    margin: 0 4px;
+                }
+                .thumbs-icon {
+                    margin: auto 0;
+                }
+            }
+        }
+    }
+}

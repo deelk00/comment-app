@@ -1,0 +1,7 @@
+@import "variables";
+
+@each $cursor in $cursors {
+  .c-#{$cursor} {
+    cursor: $cursor;
+  }
+}

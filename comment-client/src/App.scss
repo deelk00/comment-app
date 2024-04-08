@@ -1,0 +1,162 @@
+@import "styles/variables";
+
+$settings-width: 200px;
+$settings-icon-width: 16px;
+$settings-padding: 8px;
+$body-width: 416px;
+$add-comment-content-padding: 8px;
+$add-comment-submit-button-width: 30px;
+
+
+$navigation-height: 64px;
+$navigation-padding: 8px;
+.app {
+  position: relative;
+}
+
+.navigation {
+  height: $navigation-height - $navigation-padding * 2;
+  padding: $navigation-padding;
+  box-shadow: 4px 4px 15px $shadow-color;
+
+  .brand {
+    margin: auto 16px auto 8px;
+    font-size: 24px;
+    text-shadow: 1px 1px 1px $shadow-color;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .control {
+    margin-left: 32px;
+    height: 32px;
+    margin: auto 4px auto auto;
+    max-width: 250px;
+  }
+}
+
+.app-body {
+  margin: 24px auto;
+  width: $body-width;
+}
+
+.add-comment-form {
+  margin-left: 25px;
+  flex-shrink: 0;
+  border: 1px solid $shadow-color;
+  width: $body-width - 48px;
+
+  .add-comment-content-wrapper {
+    position: relative;
+    width: $body-width - 48px - 40px - $add-comment-content-padding * 2;
+    .add-comment-content {
+      white-space: pre-wrap;
+      position: absolute;
+      width: $body-width - 48px - 40px - $add-comment-content-padding * 2;
+      z-index: 1;
+      resize: none;
+      border: none;
+      padding: $add-comment-content-padding;
+      font-size: 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      text-wrap: normal;
+      &:focus {
+        outline: none;
+      }
+
+      &.shadow {
+        position: relative;
+        z-index: -1;
+        opacity: 1;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .submit {
+    border: none;
+    background-color: transparent;
+    font-size: 12px;
+    width: $add-comment-submit-button-width;
+    .submit-icon {
+      margin: auto 10px auto 0;
+      width: $add-comment-submit-button-width - 10px;
+      color: #999;
+    }
+  }
+}
+
+
+.comment-section {
+  margin-top: 12px;
+  z-index: 0;
+  overflow-y: auto;
+
+  .no-comments {
+    font-size: 18px;
+    color: #999;
+    margin: auto;
+    margin-top: 16px;
+  }
+
+  .loading-text {
+    font-size: 18px;
+    color: #999;
+    margin: auto;
+    margin-top: 16px;
+  }
+}
+
+.settings {
+  padding: $settings-padding;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  right: 0 - $settings-width + $settings-icon-width;
+  width: $settings-width;
+  border-top-left-radius: 8px;
+  border: 1px solid $shadow-color;
+  border-bottom: none;
+  border-right: none;
+
+  transition: 0.3s right;
+
+  &:hover {
+    right: 0;
+  }
+
+  .settings-icon {
+    margin: 0 $settings-padding auto 0;
+    width: $settings-icon-width;
+    cursor: pointer;
+  }
+
+  .control {
+    margin: 0 0 8px 0;
+  }
+
+  .unit {
+    width: 40px;
+    margin: auto 0;
+  }
+
+  .save-button {
+    margin: 0 0 8px auto;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid $shadow-color;
+    border-radius: 4px;
+    box-shadow: 4px 4px 8px #aaaaaa44;
+    &:hover :not([disabled]) {
+      background-color: #f0f0f0;
+    }
+    &:active :not([disabled]) {
+      background-color: #e0e0e0;
+    }
+  }
+}

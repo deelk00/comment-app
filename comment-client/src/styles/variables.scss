@@ -1,0 +1,27 @@
+$shadow-color: #33333355;
+$spacing-steps: (0px, 4px, 8px, 16px, 32px, 64px);
+$cursors: (
+    default, 
+    pointer, 
+    not-allowed, 
+    text, 
+    move, 
+    copy, 
+    no-drop, 
+    col-resize, 
+    row-resize, 
+    n-resize, 
+    e-resize, 
+    s-resize, 
+    w-resize, 
+    ne-resize, 
+    nw-resize, 
+    se-resize, 
+    sw-resize, 
+    ew-resize, 
+    ns-resize, 
+    nesw-resize, 
+    nwse-resize, 
+    zoom-in, 
+    zoom-out
+);
