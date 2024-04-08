@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CommentData } from './model/data/comment';
+import { CommentData } from './model/comment';
 import { Settings } from './components/settings/settings';
 import { AuthorNameProvider, useAuthorName } from './hooks/use-author-name';
 import { CommentsProvider, useComments } from './hooks/use-comments';

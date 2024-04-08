@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CommentData } from "../../../model/data/comment";
+import { CommentData } from "../../../model/comment";
 import { CommentComponent } from "./../comment/comment";
 import { useSearchTerm } from "../../../hooks/use-search-term";
 import { useComments } from "../../../hooks/use-comments";
@@ -7,6 +7,7 @@ import { useAuthorName } from "../../../hooks/use-author-name";
 
 export const CommentSection: React.FC = () => { 
     const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);
     const {authorName} = useAuthorName();
     const {comments, setComments} = useComments();
     const [displayedComments, setDisplayedComments] = useState<CommentData[]>([]);
@@ -25,7 +26,10 @@ export const CommentSection: React.FC = () => {
                 return commentData;
             }));
             setIsLoading(false);
-            }).catch(error => console.error(error));
+            }).catch(error => {
+                console.error(error);
+                setIsError(true);
+            });
 
         const commentsEventSource = new EventSource('http://localhost:5000/comments/subscribe');
         commentsEventSource.onmessage = (event: any) => {
@@ -58,7 +62,7 @@ export const CommentSection: React.FC = () => {
         return () => {
             commentsEventSource.close();
         };
-    }, [comments]);
+    }, []);
 
     useEffect(() => {
         if (searchTerm.searchTerm === '') {

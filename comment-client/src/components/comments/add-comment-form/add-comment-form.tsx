@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createRef, useState } from "react";
 import { useAuthorName } from "../../../hooks/use-author-name";
-import { CommentData } from "../../../model/data/comment";
+import { CommentData } from "../../../model/comment";
 import "./add-comment-form.scss";
 import { useComments } from "../../../hooks/use-comments";
 
 export const AddCommentForm: React.FC = () => {
     const addCommentFormRef = createRef<HTMLFormElement>();
-    const {comments, setComments} = useComments();
+    const {comments, setOptimistic, overrideOptimistic} = useComments();
     const [addCommentContent, setAddCommentContent] = useState('');
     const {authorName} = useAuthorName();
 
@@ -32,7 +32,8 @@ export const AddCommentForm: React.FC = () => {
         const comment = new CommentData();
         comment.content = addCommentContent;
         comment.authorName = authorName === '' ? 'Anonymous' : authorName;
-        
+        const id = setOptimistic(comment);
+        setAddCommentContent('');
         fetch('http://localhost:5000/comments', {
             method: 'POST',
             body: JSON.stringify(comment),
@@ -47,8 +48,12 @@ export const AddCommentForm: React.FC = () => {
             commentData.content = data.content;
             commentData.authorName = data.authorName;
             commentData.likes = data.likes;
-            setComments([commentData, ...comments]);
-            setAddCommentContent('');
+            console.log(comment, id);
+            
+            overrideOptimistic(id, commentData);
+        }).catch(error => {
+            console.error(error);
+            overrideOptimistic(id);
         });
       }
       
